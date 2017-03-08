@@ -1,0 +1,18 @@
+parameter_defaults:
+  ControllerSchedulerHints:
+    'capabilities:node': 'controller-%index%'
+  NovaComputeSchedulerHints:
+    'capabilities:node': 'compute-%index%'
+  CephStorageSchedulerHints:
+    'capabilities:node': 'cephstorage-%index%'
+  HostnameMap:
+    overcloud-controller-0: osp10-ctrl01
+    overcloud-controller-1: osp10-ctrl02
+    overcloud-controller-2: osp10-ctrl03
+    overcloud-compute-0: osp10-comp01
+    overcloud-compute-1: osp10-comp02
+    overcloud-cephstorage-0: osp10-ceph01
+    overcloud-cephstorage-1: osp10-ceph02
+    overcloud-cephstorage-2: osp10-ceph03
+    overcloud-networking-0: osp10-networker01
+    overcloud-networking-1: osp10-networker02

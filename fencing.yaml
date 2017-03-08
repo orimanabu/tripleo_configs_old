@@ -1,0 +1,68 @@
+# https://bugzilla.redhat.com/show_bug.cgi?id=1242422#c3
+parameter_defaults:
+    EnableFencing: true
+    FencingConfig:
+        {
+            "devices": [
+                {
+                    "agent": "fence_xvm", 
+                    "host_mac": "52:54:00:a1:aa:01", 
+                    "params": {
+                        "multicast_address": "225.0.0.12", 
+                        "port": "osp10-ctrl01",
+                        "manage_fw": true,
+                        "manage_key_file": true,
+                        "key_file": "/etc/fence_xvm.key",
+                        "key_file_password": "abcdef"
+                    }
+                }, 
+                {
+                    "agent": "fence_xvm", 
+                    "host_mac": "52:54:00:a1:aa:02", 
+                    "params": {
+                        "multicast_address": "225.0.0.12", 
+                        "port": "osp10-ctrl02",
+                        "manage_fw": true,
+                        "manage_key_file": true,
+                        "key_file": "/etc/fence_xvm.key",
+                        "key_file_password": "abcdef"
+                    }
+                }, 
+                {
+                    "agent": "fence_xvm", 
+                    "host_mac": "52:54:00:a1:aa:03", 
+                    "params": {
+                        "multicast_address": "225.0.0.12", 
+                        "port": "osp10-ctrl03",
+                        "manage_fw": true,
+                        "manage_key_file": true,
+                        "key_file": "/etc/fence_xvm.key",
+                        "key_file_password": "abcdef"
+                    }
+                }, 
+                {
+                    "agent": "fence_xvm", 
+                    "host_mac": "52:54:00:a2:aa:01", 
+                    "params": {
+                        "multicast_address": "225.0.0.12", 
+                        "port": "osp10-comp01",
+                        "manage_fw": true,
+                        "manage_key_file": true,
+                        "key_file": "/etc/fence_xvm.key",
+                        "key_file_password": "abcdef"
+                    }
+                }, 
+                {
+                    "agent": "fence_xvm", 
+                    "host_mac": "52:54:00:a2:aa:02", 
+                    "params": {
+                        "multicast_address": "225.0.0.12", 
+                        "port": "osp10-comp02",
+                        "manage_fw": true,
+                        "manage_key_file": true,
+                        "key_file": "/etc/fence_xvm.key",
+                        "key_file_password": "abcdef"
+                    }
+                }
+            ]
+        }

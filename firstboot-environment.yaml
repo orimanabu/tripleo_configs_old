@@ -1,0 +1,3 @@
+resource_registry:
+  OS::TripleO::NodeUserData: /home/stack/tripleo_configs/firstboot-config.yaml
+

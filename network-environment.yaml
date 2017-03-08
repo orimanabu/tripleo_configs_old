@@ -1,0 +1,67 @@
+# This template configures each role to use a pair of bonded nics (nic2 and
+# nic3) and configures an IP address on each relevant isolated network
+# for each role. This template assumes use of network-isolation.yaml.
+#
+# FIXME: if/when we add functionality to heatclient to include heat
+# environment files we should think about using it here to automatically
+# include network-isolation.yaml.
+resource_registry:
+  OS::TripleO::BlockStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/cinder-storage.yaml
+  OS::TripleO::Compute::Net::SoftwareConfig: /home/stack/templates/nic-configs/compute.yaml
+  OS::TripleO::Controller::Net::SoftwareConfig: /home/stack/templates/nic-configs/controller.yaml
+  OS::TripleO::ObjectStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/swift-storage.yaml
+  OS::TripleO::CephStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/ceph-storage.yaml
+
+  OS::TripleO::Network::External: /home/stack/templates/tht/network/external.yaml
+  OS::TripleO::Network::InternalApi: /home/stack/templates/tht/network/internal_api.yaml
+  OS::TripleO::Network::StorageMgmt: /home/stack/templates/tht/network/storage_mgmt.yaml
+  OS::TripleO::Network::Storage: /home/stack/templates/tht/network/storage.yaml
+  OS::TripleO::Network::Tenant: /home/stack/templates/tht/network/tenant.yaml
+  # Management network is optional and disabled by default.
+  # To enable it, include environments/network-management.yaml
+#  OS::TripleO::Network::Management: /home/stack/templates/tht/network/management.yaml
+
+parameter_defaults:
+  InternalApiNetworkVlanID: 101
+  InternalApiNetCidr: 172.16.10.0/24
+  InternalApiAllocationPools: [{'start': '172.16.10.220', 'end': '172.16.10.229'}]
+
+  StorageNetworkVlanID: 102
+  StorageNetCidr: 172.17.10.0/24
+  StorageAllocationPools: [{'start': '172.17.10.220', 'end': '172.17.10.229'}]
+
+  StorageMgmtNetworkVlanID: 103
+  StorageMgmtNetCidr: 172.18.10.0/24
+  StorageMgmtAllocationPools: [{'start': '172.18.10.220', 'end': '172.18.10.229'}]
+
+  TenantNetworkVlanID: 104
+  TenantNetCidr: 172.19.10.0/24
+  TenantAllocationPools: [{'start': '172.19.10.220', 'end': '172.19.10.229'}]
+
+  ManagementNetworkVlanID: 105
+  ManagementNetCidr: 172.20.10.0/24
+  ManagementAllocationPools: [{'start': '172.20.10.220', 'end': '172.20.10.229'}]
+  # Use either this parameter or ControlPlaneDefaultRoute in the NIC templates
+  # ManagementInterfaceDefaultRoute: 172.20.10.1
+
+  ExternalNetworkVlanID: 100
+  ExternalNetCidr: 10.10.1.0/24
+  # Leave room for floating IPs in the External allocation pool
+  ExternalAllocationPools: [{'start': '10.10.1.220', 'end': '10.10.1.229'}]
+  # Set to the router gateway on the external network
+  ExternalInterfaceDefaultRoute: 10.10.1.1
+
+  # Gateway router for the provisioning network (or Undercloud IP)
+  ControlPlaneDefaultRoute: 10.10.9.200
+  # The IP address of the EC2 metadata server. Generally the IP of the Undercloud
+  EC2MetadataIp: 10.10.9.200
+
+  # Set to "br-ex" if using floating IPs on native VLAN on bridge br-ex
+  NeutronExternalNetworkBridge: "''"
+  # Customize bonding options if required
+  BondInterfaceOvsOptions:
+    "bond_mode=active-backup"
+
+  CloudDomain: "osptest.local"
+  # Define the DNS servers (maximum 2) for the overcloud nodes
+  DnsServers: ["10.64.255.25","10.68.5.26"]

@@ -1,0 +1,50 @@
+heat_template_version: 2014-10-16
+
+description: >
+  Extra hostname configuration
+
+parameters:
+  servers:
+    type: json
+  repo_file:
+    type: string
+  repo_host:
+    type: string
+  # This is provided via parameter_defaults from tripleoclient
+  # it changes to a new timestamp every update, so we can use it to
+  # trigger the deployment to run even though it and the config are
+  # otherwise unchanged
+  DeployIdentifier:
+    type: string
+
+resources:
+  ExtraConfig:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      group: script
+      inputs:
+        - name: deploy_identifier
+      config:
+        list_join:
+        - ''
+        - - str_replace:
+              template: |
+                #!/bin/bash
+                repofile=_REPO_FILE_
+                repohost=_REPO_HOST_
+              params:
+                _REPO_FILE_: {get_param: repo_file}
+                _REPO_HOST_: {get_param: repo_host}
+          - get_file: hook_scripts/compute_nova_ssh.sh
+          #- get_file: hook_scripts/prep_fence_xvm.sh
+          #- get_file: hook_scripts/controller_fencing.sh
+
+  ExtraDeployments:
+    type: OS::Heat::SoftwareDeployments
+    properties:
+      name: ExtraDeployments
+      servers:  {get_param: servers}
+      config: {get_resource: ExtraConfig}
+      actions: ['CREATE', 'UPDATE']
+      input_values:
+        deploy_identifier: {get_param: DeployIdentifier}

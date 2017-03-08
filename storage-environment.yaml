@@ -1,0 +1,40 @@
+parameter_defaults:
+
+  #### BACKEND SELECTION ####
+
+  ## Whether to enable iscsi backend for Cinder.
+  CinderEnableIscsiBackend: false
+  ## Whether to enable rbd (Ceph) backend for Cinder.
+  CinderEnableRbdBackend: false
+  ## Cinder Backup backend can be either 'ceph' or 'swift'.
+  CinderBackupBackend: swift
+  ## Whether to enable NFS backend for Cinder.
+  CinderEnableNfsBackend: true
+  ## Whether to enable rbd (Ceph) backend for Nova ephemeral storage.
+  NovaEnableRbdBackend: false
+  ## Glance backend can be either 'rbd' (Ceph), 'swift' or 'file'.
+  GlanceBackend: file
+  ## Gnocchi backend can be either 'rbd' (Ceph), 'swift' or 'file'.
+  GnocchiBackend: swift
+
+
+  #### CINDER NFS SETTINGS ####
+
+  ## NFS mount options
+  CinderNfsMountOptions: 'rw,sync'
+  ## NFS mount point, e.g. '192.168.122.1:/export/cinder'
+  CinderNfsServers: '10.10.9.254:/nfs_export/cinder'
+
+
+  #### GLANCE NFS SETTINGS ####
+
+  ## Make sure to set `GlanceBackend: file` when enabling NFS
+  ##
+  ## Whether to make Glance 'file' backend a NFS mount
+  GlanceNfsEnabled: true
+  ## NFS share for image storage, e.g. '192.168.122.1:/export/glance'
+  ## (If using IPv6, use both double- and single-quotes,
+  ## e.g. "'[fdd0::1]:/export/glance'")
+  GlanceNfsShare: '10.10.9.254:/nfs_export/glance'
+  ## Mount options for the NFS image storage mount point
+  GlanceNfsOptions: 'rw,sync,intr,context=system_u:object_r:glance_var_lib_t:s0'

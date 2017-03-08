@@ -1,0 +1,6 @@
+resource_registry:
+  OS::TripleO::NodeExtraConfigPost: /home/stack/tripleo_configs/post-config.yaml
+
+parameter_defaults:
+  repo_file: local-r3.repo
+  repo_host: 10.1.15.117

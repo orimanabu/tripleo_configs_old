@@ -1,0 +1,7 @@
+resource_registry:
+  OS::TripleO::AllNodesExtraConfig: extraconfig/all_nodes/swap-partition.yaml
+#  OS::TripleO::AllNodesExtraConfig: extraconfig/all_nodes/swap.yaml
+parameter_defaults:
+  swap_partition_label: "swap1"
+#  swap_size_megabytes: '2048'
+#  swap_path: '/swap'

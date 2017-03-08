@@ -1,0 +1,82 @@
+parameter_defaults:
+#  Debug: True
+#  MysqlInnodbBufferPoolSize: 25600
+#  MysqlMaxConnections: 8192
+  NeutronL3HA: true
+
+  controllerExtraConfig:
+#    ntp::iburst_enable: true
+#    ntp::minpoll: 6
+#    ntp::maxpoll: 10
+#    ntp::preferred_servers: ["172.16.151.254"]
+
+#    tripleo::loadbalancer::horizon_certificate: "/etc/pki/haproxy/haproxy.pem"
+#    tripleo::loadbalancer::haproxy_global_maxconn: "30720"
+#    tripleo::loadbalancer::haproxy_default_maxconn: "8192"
+
+#    nova::debug: True
+    nova::verbose: True
+    nova::network::neutron::dhcp_domain: "osptest.local"
+    nova::scheduler::filter::cpu_allocation_ratio: "2.0"
+    nova::scheduler::filter::scheduler_default_filters:
+      - RetryFilter
+      - AvailabilityZoneFilter
+      - RamFilter
+      - DiskFilter
+      - ComputeFilter
+      - ComputeCapabilitiesFilter
+      - ImagePropertiesFilter
+      - ServerGroupAntiAffinityFilter
+      - ServerGroupAffinityFilter
+      - AggregateImagePropertiesIsolation
+
+    neutron::dns_domain: "osptest.local"
+#    neutron::agents::dhcp::enable_isolated_metadata: true
+#    nova::quota::quota_instances: 100
+#    nova::quota::quota_cores: 100
+#    nova::quota::quota_ram: 600000
+#    neutron::quota::quota_network: 30
+#    neutron::quota::quota_subnet: 50
+#    neutron::quota::quota_port: 100
+#    cinder::quota::quota_volumes: 50
+#    cinder::quota::quota_snapshots: 50
+#    cinder::quota::quota_gigabytes: 2000
+
+    controller_classes:
+#      - nova::config
+#      - neutron::config
+      - cinder::config
+#    nova::config::nova_config:
+#      DEFAULT/quota_instances:
+#        value: 100
+#      DEFAULT/quota_cores:
+#        value: 100
+#      DEFAULT/quota_ram:
+#        value: 600000
+#    neutron::config::neutron_config:
+#      quotas/quota_network:
+#        value: 30
+#      quotas/quota_subnet:
+#        value: 50
+#      quotas/quota_port:
+#        value: 100
+    cinder::config::cinder_config:
+      DEFAULT/use_default_quota_class:
+        value: False
+#      DEFAULT/quota_volumes:
+#        value: 50
+#      DEFAULT/quota_snapshots:
+#        value: 50
+#      DEFAULT/quota_gigabytes:
+#        value: 2000
+
+  NovaComputeExtraConfig:
+#    ntp::iburst_enable: true
+#    ntp::minpoll: 6
+#    ntp::maxpoll: 10
+#    ntp::preferred_servers: ["172.16.151.254"]
+
+#    nova::debug: True
+    nova::verbose: True
+#    nova::compute::vnc_keymap: "ja"
+    nova::scheduler::filter::cpu_allocation_ratio: "2.0"
