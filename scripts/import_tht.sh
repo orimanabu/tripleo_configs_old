@@ -3,7 +3,7 @@
 set -x
 
 #source ~/tripleo_configs/scripts/subr.sh
-source ./subr.sh
+source ./scripts/subr.sh
 release=RHOSP$(osp_version)
 branch="${release}/THT"
 
